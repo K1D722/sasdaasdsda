@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>te amo ❤ Matrix</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: black;
+    }
+
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrix"></canvas>
+
+  <script>
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const phrase = "te amo ❤";
+    const fontSize = 24;
+    const columnWidth = fontSize * 4; // espacio para la frase completa
+    const columns = Math.floor(canvas.width / columnWidth);
+
+    const drops = Array.from({ length: columns }, () => 0);
+
+    function draw() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = 'hotpink';
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < columns; i++) {
+        const x = i * columnWidth;
+        const y = drops[i] * fontSize;
+
+        ctx.fillText(phrase, x, y);
+
+        if (y > canvas.height && Math.random() > 0.95) {
+          drops[i] = 0;
+        } else {
+          drops[i]++;
+        }
+      }
+    }
+
+    setInterval(draw, 50);
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>
